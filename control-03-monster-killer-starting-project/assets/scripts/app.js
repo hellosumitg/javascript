@@ -15,6 +15,7 @@ const enteredValue = prompt('Maximum life for you and the monster.', '100');
 
 let chosenMaxLife = parseInt(enteredValue);
 let battleLog = [];
+let lastLoggedEntry;
 
 if (isNaN(chosenMaxLife) || chosenMaxLife <= 0){
     chosenMaxLife = 100;
@@ -227,32 +228,45 @@ function printLogHandler(){
         j++;
     }
 
-    // do-while loop
-    let k = 3;
-    do { 
-        console.log(`++++#${k}++++`);
+    // do-while loop with `**labeled statement** which is generally used in loop statement`
+    let k = 0;
+    outerWhile: do { 
+        console.log('Outer', k);
+        innerWhile: for (let l = 0; l < 5; l++){
+            if (l === 3){
+                break outerWhile;
+                // continue outerWhile; // dangerous => infinite loop
+            }
+            console.log('Inner', l)
+        }
         k++;
     } while (k < 3);
 
-    // simple for loop
+    // simple for-loop with continue
     for (let i = 0; i < battleLog.length; i++) {
-        console.log(battleLog[i]);
+        if (i === 3){
+            continue; // here this continue will skip iteration 3 value
+        }
+        console.log(`*****#${i}*****`)
+        // console.log(battleLog[i]);
     }
 
     let i = 0;
     // for iterating every element in an array
     for (const logEntry of battleLog) {
         // console.log(logEntry);
-        console.log(`#${i}`);
-        // for iterating every element in an object
-        for (const key in logEntry) {
-            console.log(`${key} => ${logEntry[key]}`) // here the name inside of [] has to be a string 
-            // (or a variable that holds the property name we want to access)
-        }
+        if ((!lastLoggedEntry && lastLoggedEntry !== 0) || lastLoggedEntry < i) {
+            console.log(`#${i}`);
+            // for iterating every element in an object
+            for (const key in logEntry) {
+                console.log(`${key} => ${logEntry[key]}`) // here the name inside of [] has to be a string 
+                // (or a variable that holds the property name we want to access)
+            }
+            lastLoggedEntry = i;
+            break;
+        }     
         i++;
     }
-
-
 }
 
 attackBtn.addEventListener('click', attackHandler);

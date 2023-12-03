@@ -15,6 +15,8 @@ const LOG_EVENT_GAME_OVER = 'GAME_OVER';
 let battleLog = [];
 let lastLoggedEntry;
 
+// error handling-----------
+
 function getMaxLifeValues () {
     const enteredValue = prompt('Maximum life for you and the monster.', '100');
 
@@ -26,7 +28,24 @@ function getMaxLifeValues () {
     return parsedValue;
 }
 
-let chosenMaxLife = getMaxLifeValues();
+
+// There are errors (like network errors) which are beyond our control - 
+// then we handle them via try-catch to avoid runtime script crashes and possibly provide a fallback.
+let chosenMaxLife;
+
+try{
+    chosenMaxLife = getMaxLifeValues();
+} catch (error) {
+    console.log(error);
+    chosenMaxLife = 100;
+    alert('You entered something wrong, default value of 100 was used.');
+} finally {
+    // it is used when we want to by-pass try and catch with some desired output 
+}
+
+// ------------ error handling
+
+
 let currentMonsterHealth = chosenMaxLife;
 let currentPlayerHealth = chosenMaxLife;
 let hasBonusLife = true;

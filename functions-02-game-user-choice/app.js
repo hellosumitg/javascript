@@ -18,7 +18,8 @@ const getPlayerChoice = () => {
     selection !== SCISSORS
   ) {
     alert(`Invalid choice! We chose ${DEFAULT_USER_CHOICE} for you!`);
-    return DEFAULT_USER_CHOICE;
+    // return DEFAULT_USER_CHOICE; // commented out as we want to see default arguments of a function
+    return;
   }
   return selection;
 };
@@ -43,7 +44,8 @@ const getComputerChoice = () => {
 // }
 // here both add1 and add2 performs same function 
 
-const getWinner = (cChoice, pChoice) => {
+// Default Argument in Function should be the last argument
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) => {
   (cChoice === pChoice) 
     ? RESULT_DRAW
     : (cChoice === ROCK && pChoice === PAPER) ||
@@ -71,8 +73,23 @@ startGameBtn.addEventListener('click', () => {
   }
   gameIsRunning = true;
   console.log('Game is starting...');
-  const playerSelection = getPlayerChoice();
+  const playerChoice = getPlayerChoice(); // might be undefined
   const computerChoice = getComputerChoice();
-  const winner = getWinner(computerChoice, playerSelection);
-  console.log(winner);
+  let winner;
+  if (playerChoice) {
+    winner = getWinner(computerChoice, playerChoice);
+  } else {
+    winner = getWinner(computerChoice, playerChoice);
+  }
+  // let message = `You picked ${playerChoice ? playerChoice : DEFAULT_USER_CHOICE}, computer picked ${computerChoice}, therefore you`;
+  let message = `You picked ${playerChoice || DEFAULT_USER_CHOICE}, computer picked ${computerChoice}, therefore you`;
+  if (winner === RESULT_DRAW){
+    message = message + ' had a draw.';
+  } else if (winner === RESULT_PLAYER_WINS) {
+    message = message + ' won.'
+  } else {
+    message = message + ' lost.'
+  }
+  alert(message);
+  gameIsRunning = false;
 });

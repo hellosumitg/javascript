@@ -93,3 +93,28 @@ startGameBtn.addEventListener('click', () => {
   alert(message);
   gameIsRunning = false;
 });
+
+// not related to game
+// Here we are using `rest parameter`(below `...numbers` is a `rest` parameter) which looks like a `spread operator` but works differently 
+// and we put always at the end in the parameters list as shown below
+const sumUp = (a, b, ...numbers) => {
+  let sum = 0;
+  for (const num of numbers) {
+    sum  += num
+  }
+  return sum;
+};
+
+// before es6 `arguments` keyword is used as `rest operator` but keep in mind it works with `function` keyword 
+const subtractUp = function () {
+  let sub = 0;
+  for (const num of arguments) { // but don't use this
+    sub -= num;
+  }
+  return sub;
+}
+
+console.log(sumUp(1, 5, 10, -3, 6, 10));
+console.log(sumUp(1, 5, 10, -3, 6, 10, 25, 88));
+
+console.log(subtractUp(1, 10, 15, 20));

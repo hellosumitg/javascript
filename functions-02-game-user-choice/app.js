@@ -98,32 +98,54 @@ startGameBtn.addEventListener('click', () => {
 // Here we are using `rest parameter`(below `...numbers` is a `rest` parameter) which looks like a `spread operator` but works differently 
 // and we put always at the end in the parameters list as shown below
 // Also learning Callback function
-const sumUp = (resultHandler, ...numbers) => {
+// const sumUp = (resultHandler, ...numbers) => {
+//   // creating functions inside functions here below function is locally scoped i.e can be used within this function
+//   const validateNumber = (number) => {
+//     return isNaN(number) ? 0 : number;
+//   }
+//   let sum = 0;
+//   for (const num of numbers) {
+//     sum  += validateNumber(num)
+//   }
+//   resultHandler(sum, 'The result after adding all numbers is');
+// };
+
+// before es6 `arguments` keyword is used as `rest operator` but keep in mind it works with `function` keyword 
+// const subtractUp = function (resultHandler, ...numbers) {
+//   let sub = 0;
+//   // for (const num of arguments) { // but don't use this
+//    for (const num of numbers){
+//     sub -= num;
+//   }
+//   resultHandler(sub, 'The result after subtracting all numbers is');
+// }
+
+const combine = (resultHandler, operation, ...numbers) => {
   // creating functions inside functions here below function is locally scoped i.e can be used within this function
   const validateNumber = (number) => {
     return isNaN(number) ? 0 : number;
-  }
+  };
+
   let sum = 0;
   for (const num of numbers) {
-    sum  += validateNumber(num)
+    if (operation === 'ADD'){
+      sum  += validateNumber(num)
+    } else {
+      sum -= validateNumber(num)
+    }
   }
+  // resultHandler(sum, operation === 'ADD' ? 'The result after adding all numbers is' : 'The result after subtracting all numbers is');
   resultHandler(sum);
 };
 
-// before es6 `arguments` keyword is used as `rest operator` but keep in mind it works with `function` keyword 
-const subtractUp = function () {
-  let sub = 0;
-  for (const num of arguments) { // but don't use this
-    sub -= num;
-  }
-  resultHandler(sub);
-}
-
-const showResult = (result) => {
-  alert('The result after adding all numbers is: ' + result)
+const showResult = (messageText, result) => {
+  alert(messageText + ' ' + result)
 };
 
-sumUp(showResult, 1, 5, 10, 'sun', -3, 6, 10);
-sumUp(showResult, 1, 5, 10, -3, 6, 10, 25, 88);
+// sumUp(showResult, 'ADD', 1, 5, 10, 'sun', -3, 6, 10);
+// sumUp(showResult, 'ADD', 1, 5, 10, -3, 6, 10, 25, 88);
+// subtractUp(showResult, 'SUBTRACT', 1, 10, 15, 20);
 
-console.log(subtractUp(1, 10, 15, 20));
+combine(showResult.bind(this, 'The result after adding all numbers is:'), 'ADD', 1, 5, 10, 'sun', -3, 6, 10);
+combine(showResult.bind(this, 'The result after adding all numbers is:'), 'ADD', 1, 5, 10, -3, 6, 10, 25, 88);
+combine(showResult.bind(this, 'The result after subtracting all numbers is:'), 'SUBTRACT', 1, 10, 15, 20);

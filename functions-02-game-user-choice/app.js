@@ -95,8 +95,9 @@ startGameBtn.addEventListener('click', () => {
 });
 
 // not related to game
-// Here we are using `rest parameter`(below `...numbers` is a `rest` parameter) which looks like a `spread operator` but works differently 
-// and we put always at the end in the parameters list as shown below
+// Here we are using `Rest Parameter`(below `...numbers` is a `Rest Parameter`) which looks like a `spread operator` but works differently 
+// and we put always at the end in the parameters list as shown below...
+// Rest Parameter actually bundles all arguments beyond the first argument into an array, accessible via the, here `numbers` parameter.
 // Also learning Callback function
 // const sumUp = (resultHandler, ...numbers) => {
 //   // creating functions inside functions here below function is locally scoped i.e can be used within this function
@@ -146,6 +147,7 @@ const showResult = (messageText, result) => {
 // sumUp(showResult, 'ADD', 1, 5, 10, -3, 6, 10, 25, 88);
 // subtractUp(showResult, 'SUBTRACT', 1, 10, 15, 20);
 
+// `bind()` come in handy in situations where we want to "pre-configure" a function's arguments, when we're not calling the function on our own.
 combine(showResult.bind(this, 'The result after adding all numbers is:'), 'ADD', 1, 5, 10, 'sun', -3, 6, 10);
 combine(showResult.bind(this, 'The result after adding all numbers is:'), 'ADD', 1, 5, 10, -3, 6, 10, 25, 88);
 combine(showResult.bind(this, 'The result after subtracting all numbers is:'), 'SUBTRACT', 1, 10, 15, 20);

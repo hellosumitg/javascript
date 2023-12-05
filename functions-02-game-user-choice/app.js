@@ -97,12 +97,17 @@ startGameBtn.addEventListener('click', () => {
 // not related to game
 // Here we are using `rest parameter`(below `...numbers` is a `rest` parameter) which looks like a `spread operator` but works differently 
 // and we put always at the end in the parameters list as shown below
-const sumUp = (a, b, ...numbers) => {
+// Also learning Callback function
+const sumUp = (resultHandler, ...numbers) => {
+  // creating functions inside functions here below function is locally scoped i.e can be used within this function
+  const validateNumber = (number) => {
+    return isNaN(number) ? 0 : number;
+  }
   let sum = 0;
   for (const num of numbers) {
-    sum  += num
+    sum  += validateNumber(num)
   }
-  return sum;
+  resultHandler(sum);
 };
 
 // before es6 `arguments` keyword is used as `rest operator` but keep in mind it works with `function` keyword 
@@ -114,7 +119,11 @@ const subtractUp = function () {
   return sub;
 }
 
-console.log(sumUp(1, 5, 10, -3, 6, 10));
-console.log(sumUp(1, 5, 10, -3, 6, 10, 25, 88));
+const showResult = (result) => {
+  alert('The result after adding all numbers is: ' + result)
+};
+
+sumUp(showResult, 1, 5, 10, 'sun', -3, 6, 10);
+sumUp(showResult, 1, 5, 10, -3, 6, 10, 25, 88);
 
 console.log(subtractUp(1, 10, 15, 20));

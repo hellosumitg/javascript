@@ -116,7 +116,7 @@ const subtractUp = function () {
   for (const num of arguments) { // but don't use this
     sub -= num;
   }
-  return sub;
+  resultHandler(sub);
 }
 
 const showResult = (result) => {

@@ -41,3 +41,27 @@ const newLi = document.createElement('li');
 list.appendChild(newLi);
 
 newLi.textContent = 'Item 5';
+
+
+//Inserting DOM Elements:
+list.append('Some text');
+
+const newListEl = document.createElement('li');
+newListEl.textContent = 'Item 6';
+
+list.prepend(newListEl);
+console.log(list.lastElementChild);
+
+list.lastElementChild.before(newListEl);
+
+list.lastElementChild.after(newListEl);
+
+list.firstElementChild.replaceWith(newListEl);
+
+list.append(newListEl, 'someOtherText');
+
+const secondLi = list.children[1];
+
+newLi.textContent = 'Item 4';
+
+console.log(secondLi.insertAdjacentElement('afterend', newLi));

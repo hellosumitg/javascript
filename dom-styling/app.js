@@ -65,3 +65,10 @@ const secondLi = list.children[1];
 newLi.textContent = 'Item 4';
 
 console.log(secondLi.insertAdjacentElement('afterend', newLi));
+
+
+// Cloning DOM Nodes;-
+console.log(newLi.cloneNode(true));
+const newLi2 = newLi.cloneNode(true);
+
+list.append(newLi, newLi2);

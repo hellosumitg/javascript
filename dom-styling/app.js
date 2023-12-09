@@ -89,3 +89,8 @@ newLi.textContent = 'Item 7';
 
 list.append(newLi);
 
+
+// Removing Elements:-
+// list.remove();
+// OR
+// list.parentElement.removeChild(list);

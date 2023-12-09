@@ -72,3 +72,20 @@ console.log(newLi.cloneNode(true));
 const newLi2 = newLi.cloneNode(true);
 
 list.append(newLi, newLi2);
+
+
+// Live Node List vs Static Node List
+const listItems = list.querySelectorAll('li');
+//`querySelector--something---` gives us an array like something(i.e NodeList()[]) with `STATIC Node Lists`
+// whenever we change it, it will not change on the screen immediately.
+console.log('listItems: ', listItems);
+
+const listItems2 = list.getElementsByTagName('li'); 
+// `getElementsBy---Something-----` gives us an array like something(i.e HTMLCollection()[]) with `LIVE Node lists` 
+// whenever we change it, it will change on the screen immediately.
+console.log('listItems2: ', listItems2);
+
+newLi.textContent = 'Item 7';
+
+list.append(newLi);
+

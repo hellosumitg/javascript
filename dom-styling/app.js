@@ -25,4 +25,19 @@ button.addEventListener('click', () => {
 
 // Adding Elements via HTML in Code
 // section.textContent = 'New content!';
-section.innerHTML = '<h2> A new title </h2>'
+// section.innerHTML = '<h2> A new title </h2>' // not that useful when we just want to change a particular element in the node 
+// as it will change all the elements in that node whether parent or 
+// also it rerenders the whole node which is not that great for bigger website and causes performance issues look at below example
+const list = document.querySelector('ul');
+list.innerHTML = list.innerHTML + '<li>Item 4</li>';
+
+// So in place of `.innerHTML` we can use:-
+const div = document.querySelector('div');
+div.insertAdjacentHTML('beforeend', '<p>Something went wrong!</p>')
+
+console.log(div.querySelector('p'))
+
+const newLi = document.createElement('li');
+list.appendChild(newLi);
+
+newLi.textContent = 'Item 5';

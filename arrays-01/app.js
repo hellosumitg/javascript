@@ -23,3 +23,18 @@ console.log(listItems); // this `Array.from(listItems)` converts them to array
 const arrayListItems = Array.from(listItems); 
 console.log(arrayListItems); // this is array
 
+
+// What type of Data we can store in arrays ?
+
+const hobbies = ['Cooking', 'Sports'];
+const personalData = [30, 'Max', {moreDetails: []}];
+
+const analyticsData = [[1, 1.6], [-5.4, 2.1]];
+
+for (const data of analyticsData) {
+    for (const dataPoint of data){
+        console.log(dataPoint);
+    }
+}
+
+console.log(personalData[1]); // length is always `index + 1`

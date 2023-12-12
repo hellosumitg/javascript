@@ -29,7 +29,7 @@ button.addEventListener('click', () => {
 // as it will change all the elements in that node whether parent or 
 // also it rerenders the whole node which is not that great for bigger website and causes performance issues look at below example
 const list = document.querySelector('ul');
-list.innerHTML = list.innerHTML + '<li>Item 4</li>';
+list.innerHTML = list.innerHTML + '<li>Item 4</li>'; // can use backticks(i.e ` `) if the HTML spans to multiple lines
 
 // So in place of `.innerHTML` we can use:-
 const div = document.querySelector('div');

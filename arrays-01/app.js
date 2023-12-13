@@ -109,3 +109,22 @@ console.log("testResults: ", testResults);
 
 const storedResults6 = testResults.concat([3, 4, 6.7]); // creates a copy of the array(i.e new array) and actually merge the given array with the given array
 console.log("storedResults6: ", storedResults6);
+console.log("testResults: ", testResults);
+
+// `.indexOf()` or `lastIndexOf()` which works well with `Primitive` values as shown below:-
+//  but not works well with `Reference` values
+
+testResults.pop()
+console.log("testResults: ", testResults);
+// Searching from the left(i.e from 0th index):-
+console.log('Index of `1.5`in testResults: ', testResults.indexOf(1.5)); // here we will search `1.5` in the whole array starting from `0th` index
+console.log('Index of `10.99`in testResults: ', testResults.indexOf(10.99, 2)); // // here we will search `10.99` in the whole array starting from `2nd` index
+
+// Searching from the right(i.e from last index)
+console.log('Last Index of `-5`in testResults: ', testResults.lastIndexOf(-5)); // here we will search `1.5` in the whole array starting from last index
+console.log('Last Index of `10.99`in testResults: ', testResults.lastIndexOf(10.99, -2)); // // here we will search `10.99` in the whole array starting from `-2nd` index
+
+const personData = [{name: "Max"}, {name: 'Manuel'}];
+console.log('Index of `Manuel`: ', personData.indexOf({name: 'Manuel'})); // returns `-1` which is the output for both `indexOf()` or `lastIndexOf()` when they are unable to find anything
+console.log('Index of `Manuel`: ', personData.lastIndexOf({name: 'Max'})); // returns `-1` which is the output for both `indexOf()` or `lastIndexOf()` when they are unable to find anything
+// The reason behind this is `Reference` value thing in case of objects

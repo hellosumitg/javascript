@@ -101,3 +101,11 @@ console.log(storedResults4);
 
 const storedResults5 = testResults.slice(-3, -1);
 console.log(storedResults5);
+
+
+// Adding arrays to arrays with `concat()`:-
+testResults.push([2, 5.3]); //pushes in the same array
+console.log("testResults: ", testResults);
+
+const storedResults6 = testResults.concat([3, 4, 6.7]); // creates a copy of the array(i.e new array) and actually merge the given array with the given array
+console.log("storedResults6: ", storedResults6);

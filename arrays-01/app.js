@@ -75,3 +75,29 @@ console.log(hobbies);
 
 hobbies.splice(-1, 1); // deletes 1 item starting from last index item
 console.log(hobbies);
+
+
+// `.slice()`:
+const testResults = [1, 5.3, 1.5, 10.99, -5, 10];
+console.log(testResults.slice()); // `.slice()` returns a brand new similar array (i.e produces a copy of the same array) as
+// arrays are objects(i.e `Reference value`)
+
+testResults.push(3.5);
+const storedResults1 = testResults; // basically stores a `pointer`(i.e naming `testResults`) to the `address` in the memory
+// where the values of the above array is stored
+console.log(storedResults1, testResults);
+
+
+const storedResults2 = testResults.slice(0); // starts from index 0 to all the way to end
+testResults.push(7.8);
+console.log('storedResults2: ', storedResults2);
+console.log('testResults:', testResults);
+
+const storedResults3 = testResults.slice(0, 2);// 1st place starting index and 2nd place is index upto which we select excluding the 2nd place Index item
+console.log(storedResults3);
+
+const storedResults4 = testResults.slice(3, 0); // empty as index should not be in reversed order
+console.log(storedResults4);
+
+const storedResults5 = testResults.slice(-3, -1);
+console.log(storedResults5);

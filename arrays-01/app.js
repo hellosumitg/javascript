@@ -56,3 +56,22 @@ console.log("adds one element(i.e 'Coding') on 1st index: ", hobbies);
 
 hobbies[5] = 'Reading'; // Rarely used but nice to know
 console.log(hobbies, "hobbies[4] gives undefined: ", hobbies[4]);
+
+console.log('hobbies[-1] outputs:', hobbies[-1]); // gives undefined as -ve indexing not allowed
+
+
+// `splice()` method is only available for `Real Arrays` not on `Iterables` nor on `Array like objects` 
+// For using `splice()` one should convert `Iterables` or `Array like objects` to `Array` using `Array.from(`Iterable` or `Array like object`)`
+hobbies.splice(2, 3, 'Good Food', 'Sports'); // 1st place for `index number(i.e Start looking from this...)`, 2nd place for `number of elements you want to delete`
+// and on 3rd place we can add as many `numbers or items` as we can at the place of deleted ones `index`in this case `0th` place.
+console.log(hobbies);
+
+// using `splice()` for removing element:
+hobbies.splice(0, 2); // deletes 2 items starting from 0th index
+console.log(hobbies);
+
+hobbies.splice(2); // deletes all staring and including from 2nd index
+console.log(hobbies);
+
+hobbies.splice(-1, 1); // deletes 1 item starting from last index item
+console.log(hobbies);

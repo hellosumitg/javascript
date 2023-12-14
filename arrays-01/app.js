@@ -220,3 +220,17 @@ const filteredArray = prices.filter(price => price > 6);
 console.log(filteredArray);
 
 
+// `.reduce((prevVal, curVal(i.e 0th index item of array), idx, array)=>{}, param2(i.e prevVal))` method
+let sum = 0;
+
+prices.forEach((price) => {
+  sum += price
+});
+
+console.log('Sum of all prices: ', sum);
+
+const totalAmount = prices.reduce((prevValue, curValue, curIndex, prices) => {
+  return prevValue + curValue;
+ }, 0);
+
+console.log(totalAmount);

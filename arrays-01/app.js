@@ -188,3 +188,22 @@ const taxAdjustPrices = prices.map((price, idx, prices) => {
 });
 
 console.log(prices, taxAdjustPrices);
+
+
+// `.sort()` and `reverse()` method
+const sortPrices = prices.sort();// not able to give the sorted price array
+// as it first converts the array in string and then compares,
+// So in that case `10.99` => whose first letter is `1` becomes the smallest hence gets `1st` place 
+console.log(sortPrices); // outputs this [10.99, 3.99, 5.99, 6.59 ]
+
+const sortedPrices = prices.sort((a, b) => {
+  if (a > b) {
+    return -1;
+  } else if (a === b) {
+    return 0;
+  } else {
+    return 1;
+  }
+});
+console.log('due to our logic gives reverse order', sortedPrices); 
+console.log("due to our logic .reverse() gives sorted order", sortedPrices.reverse());

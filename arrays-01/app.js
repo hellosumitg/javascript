@@ -210,7 +210,13 @@ console.log("due to our logic .reverse() gives sorted order", sortedPrices.rever
 
 
 // filtering arrays with `.filter()` method which filters and returns a new array
-const filteredArray = prices.filter((price, idx, prices) => {
-  return price > 6
-});
+// const filteredArray = prices.filter((price, idx, prices) => {
+//   return price > 6
+// });
+// console.log(filteredArray);
+
+// here the arrow function shines we can write above thing in a more shorter way:-
+const filteredArray = prices.filter(price => price > 6);
 console.log(filteredArray);
+
+

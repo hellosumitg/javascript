@@ -232,5 +232,20 @@ console.log('Sum of all prices: ', sum);
 const totalAmount = prices.reduce((prevValue, curValue, curIndex, prices) => {
   return prevValue + curValue;
  }, 0);
-
 console.log(totalAmount);
+
+// Or can also br written as:-
+const fullAmt = prices.reduce((prevValue, curValue) => prevValue + curValue, 0);
+console.log(fullAmt);
+
+
+// Arrays & Strings - `.split()` and `.join()` methods 
+const data = 'new york;10.99;2000';
+
+const transformedData = data.split(';'); // ':' is a separator
+transformedData[1] = +transformedData[1];
+console.log(transformedData);
+
+const nameFragments = ['Max', 'Schwartz'];
+const name = nameFragments.join(' '); // ' ' white-space is a separator 
+console.log(name);

@@ -124,6 +124,9 @@ console.log('Index of `10.99`in testResults: ', testResults.indexOf(10.99, 2)); 
 console.log('Last Index of `-5`in testResults: ', testResults.lastIndexOf(-5)); // here we will search `1.5` in the whole array starting from last index
 console.log('Last Index of `10.99`in testResults: ', testResults.lastIndexOf(10.99, -2)); // // here we will search `10.99` in the whole array starting from `-2nd` index
 
+// `.includes()` also works same as `indexOf()`
+console.log('`.includes()` return True or False which means whether an item is present in the array or not: ', testResults.includes(10.99));
+
 const personData = [{name: "Max"}, {name: 'Manuel'}];
 console.log('Index of `Manuel`: ', personData.indexOf({name: 'Manuel'})); // returns `-1` which is the output for both `indexOf()` or `lastIndexOf()` when they are unable to find anything
 console.log('Index of `Manuel`: ', personData.lastIndexOf({name: 'Max'})); // returns `-1` which is the output for both `indexOf()` or `lastIndexOf()` when they are unable to find anything

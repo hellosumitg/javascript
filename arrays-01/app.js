@@ -111,7 +111,7 @@ const storedResults6 = testResults.concat([3, 4, 6.7]); // creates a copy of the
 console.log("storedResults6: ", storedResults6);
 console.log("testResults: ", testResults);
 
-// `.indexOf()` or `lastIndexOf()` which works well with `Primitive` values as shown below:-
+// `.indexOf()` or `.lastIndexOf()` which works well with `Primitive` values as shown below:-
 //  but not works well with `Reference` values
 
 testResults.pop()
@@ -128,3 +128,24 @@ const personData = [{name: "Max"}, {name: 'Manuel'}];
 console.log('Index of `Manuel`: ', personData.indexOf({name: 'Manuel'})); // returns `-1` which is the output for both `indexOf()` or `lastIndexOf()` when they are unable to find anything
 console.log('Index of `Manuel`: ', personData.lastIndexOf({name: 'Max'})); // returns `-1` which is the output for both `indexOf()` or `lastIndexOf()` when they are unable to find anything
 // The reason behind this is `Reference` value thing in case of objects
+
+
+// So to fix this issue of finding `Reference` value(i.e object) index in an array, we will use `.find(()=>{})` and `.findIndex(()=>{})` to solve this but it can also be used in any type of array whether `primitive` or `reference` type arrays:-
+// Structure of `.find((arg1(i.e single object of an array), arg2(i.e index of that single object), arg3(i.e full array))=>{})`
+const manuel = personData.find((person, idx, persons) => {
+    return person.name === 'Manuel';
+  });
+  
+console.log(manuel);
+
+//`.find()` works on the same array and make changes in the same array and `doesn't create a copy` of that array lets watch this property
+manuel.name = 'Anna';
+  
+console.log(manuel, personData);
+  
+// `.findIndex(()=>{}) gives the index of that object
+const maxIndex = personData.findIndex((person, idx, persons) => {
+  return person.name === 'Max';
+});
+
+console.log(maxIndex);

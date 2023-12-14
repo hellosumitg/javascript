@@ -174,4 +174,17 @@ prices.forEach((price, idx, prices) => {
   taxAdjustedPrices.push(priceObj);
 });
 
-console.log(taxAdjustedPrices);
+console.log(prices, taxAdjustedPrices);
+
+
+// Transforming Data with `.map()` method
+
+const taxAdjustPrices = prices.map((price, idx, prices) => {
+  const priceObj = { 
+                    index: idx, 
+                    taxAdjPrice: price * (1 + tax) 
+                  };
+  return priceObj;
+});
+
+console.log(prices, taxAdjustPrices);

@@ -247,5 +247,34 @@ transformedData[1] = +transformedData[1];
 console.log(transformedData);
 
 const nameFragments = ['Max', 'Schwartz'];
-const name = nameFragments.join(' '); // ' ' white-space is a separator 
-console.log(name);
+const fullName = nameFragments.join(' '); // ' ' white-space is a separator 
+console.log(fullName);
+
+
+// The Spread Operator (...)
+const copiedNameFragments = [...nameFragments]; // copied array
+nameFragments.push('Mr');
+console.log(nameFragments, copiedNameFragments);
+console.log(Math.min(prices)); // returns `NaN`
+console.log(Math.min(...prices)); // pulls the numbers from the `prices array and put into this in a comma separated values like this:
+// 10.99, 5.99, 3.99, 6.59 to compare
+
+
+// common mistakes:-
+const persons = [{ name: 'Max', age: 30 }, { name: 'Manuel', age: 31 }];
+// Basically, const persons = [ address of `obj1` in memory, address of `obj2` in memory];
+const copiedPersons = [...persons]; // brand new array
+console.log(persons, copiedPersons);
+
+persons.push({ name: 'Anna', age: 29 }); // addition of new `address of obj3 in memory` to persons array 
+console.log(persons, copiedPersons);
+
+// persons[0].age = 31; // this actually changes the `age value` stored at the address of `obj1` and hence reflected in all array as address is same
+// console.log(persons, copiedPersons);
+
+// So for creating an actually copy of `persons` array without using the `addresses of objects` we have to do this:-
+const copyOfPersons = persons.map((person) => {({
+  name: person.name, // new address of obj.name and obj.age in memory
+  age: person.age
+})}); // as `.map()` creates an array as return value
+console.log(persons, copyOfPersons);

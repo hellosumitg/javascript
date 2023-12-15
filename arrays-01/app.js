@@ -272,9 +272,19 @@ console.log(persons, copiedPersons);
 // persons[0].age = 31; // this actually changes the `age value` stored at the address of `obj1` and hence reflected in all array as address is same
 // console.log(persons, copiedPersons);
 
-// So for creating an actually copy of `persons` array without using the `addresses of objects` we have to do this:-
-const copyOfPersons = persons.map((person) => {({
+// So for creating an actually copy of `persons` array without using the same `addresses of objects` we have to do this:-
+const copyOfPersons = persons.map((person) => ({
   name: person.name, // new address of obj.name and obj.age in memory
   age: person.age
-})}); // as `.map()` creates an array as return value
+})); // as `.map()` creates an array as return value
 console.log(persons, copyOfPersons);
+
+
+// Array destructuring:-
+const nameData = ['Max', 'Schwarz', 'Mr', 30];
+// const firstName = nameData[0];
+// const lastName = nameData[1];
+
+// Now we will use `rest operator i.e ...arrayName` to get the remaining items in the array during its destructuring;
+const [ firstName, lastName, ...otherInformation ] = nameData;
+console.log(firstName, lastName, otherInformation);

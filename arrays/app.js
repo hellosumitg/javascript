@@ -14,7 +14,7 @@ console.log(strangeArray2);
 const yetMoreNumbers = Array.of(1, 2);
 console.log(yetMoreNumbers);
 
-const newMoreNumbers = Array.from('Hi!');
+const newMoreNumbers = Array.from('Hi!'); // converts any `iterables` into an `array`
 console.log(newMoreNumbers);
 
 const listItems = document.querySelectorAll('li'); // these are `NodeList` but not array

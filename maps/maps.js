@@ -36,3 +36,14 @@ for (const value of personData.values()) {
 }
 
 console.log(personData.size); // size is a property
+
+
+// Weak map has very less `methods` available
+let person = {name: 'Max'};
+
+const newPersonData = new WeakMap(); // garbage collector collects data whenever browser wants 
+personData.set(person, 'Extra info!');
+
+// person = null;
+
+console.log(newPersonData);

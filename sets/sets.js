@@ -27,4 +27,15 @@ if (ids.has('Hi')) {
 }
 
 console.log('After deleting "Hi": ', ids);
+
+// Weak set has very less `methods` available
+let person = {name: 'Max'};
+const persons = new WeakSet(); // in WeakSet() entry should always be an `object`
+persons.add(person);
+
+// used in ... some operations where we want the data to let go in `garbage collection` whenever browser wants
+person = null; // here garbage collector removes person object from `heap` memory
+// if we have used `new Set()` then after making the `person` object to `null` then 
+// also JavaScript will hold the value and not throw it to garbage collection even we intended to do so
+console.log(persons);
   

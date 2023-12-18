@@ -59,3 +59,10 @@ const keyName = 'first name'; // a `key` of a property in the `person` object
 console.log('person[keyName] : ', person[keyName]); // Dynamic Property Access as we are not looking for a property name `keyName` but instead we want to look for a property with the value inside of `keyName` in `person` object.
 // but with `person.keyName` javascript will search for the property with name `keyName` in `person` object for it's value, let's see it below 
 console.log('person.keyName : ', person.keyName); // which will output `undefined` as this `key` is not present in `person` object
+
+// This will work as Dynamic property assignment is supported - accessing properties via square brackets is as well.
+const propKey = 'field 12';
+const person2 = {
+    [propKey]: 'Max'
+};
+console.log(person2['field 12']);

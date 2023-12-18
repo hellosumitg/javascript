@@ -1,9 +1,12 @@
+const userChosenKeyName = 'level';
+
 // In every objects `keys` like below `first name`, `age`, `hobbies` and `greet` are `string` 
 // on the other hand their corresponding `values` can be of any data types.
 let person = {
   'first name': 'Max', // property and this way is only exclusive to objects and not to variables 
   age: 30, // property
   hobbies: ['Sports', 'Cooking'], // property
+  [userChosenKeyName]: '...', // Setting Properties Dynamically
   greet: function() { // method
     alert('Hi there!');
   }, 
@@ -51,4 +54,6 @@ const numbers = {5: 'hi', 1: 'true'};
 console.log(numbers); // we get it in ascending order
 
 
-//  Dynamic Property Access & Setting Properties Dynamically
+//  Dynamic Property Access & Setting Properties Dynamically(which can be seen above in the `person` object declaration)
+const keyName = 'first name';
+console.log(person[keyName]); // Dynamic Property Access as we are not looking for a property name `keyName` but instead we want to look for a property with the value inside of `keyName` in `person` object.

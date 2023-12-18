@@ -49,3 +49,6 @@ console.log(person); // ordered in the same way we have defined or inserted in t
 // but in the case of `numbers` as `key` it will be sorted in ascending order like in case of `array` which is also an `object`
 const numbers = {5: 'hi', 1: 'true'};
 console.log(numbers); // we get it in ascending order
+
+
+//  Dynamic Property Access & Setting Properties Dynamically

@@ -55,5 +55,7 @@ console.log(numbers); // we get it in ascending order
 
 
 //  Dynamic Property Access & Setting Properties Dynamically(which can be seen above in the `person` object declaration)
-const keyName = 'first name';
-console.log(person[keyName]); // Dynamic Property Access as we are not looking for a property name `keyName` but instead we want to look for a property with the value inside of `keyName` in `person` object.
+const keyName = 'first name'; // a `key` of a property in the `person` object 
+console.log('person[keyName] : ', person[keyName]); // Dynamic Property Access as we are not looking for a property name `keyName` but instead we want to look for a property with the value inside of `keyName` in `person` object.
+// but with `person.keyName` javascript will search for the property with name `keyName` in `person` object for it's value, let's see it below 
+console.log('person.keyName : ', person.keyName); // which will output `undefined` as this `key` is not present in `person` object

@@ -30,10 +30,24 @@ const renderMovies = (filter = '') => {
     // for different `movies` where every time, `extraName` could hold a new value. Now, if we only have one global variable where we store this value,
     // then this will always hold the latest value the user entered, not all values. So here if we can output this, we would also only output the latest value,
     // so that is certainly not a solution we can use, instead we can do something different.
-    let text = movie.info.title + ' - '; // this is called `Property Chaining`
-    for (const key in movie.info) {
+    
+    // let text = movie.info.title + ' - '; // this is called `Property Chaining`
+    // for (const key in movie.info) {
+    //   if (key !== 'title' ){ // as we know key is always a string so writing `title` as 'string' otherwise javascript will search for `title` variable
+    //     text = text + `${key}: ${movie.info[key]}`; // Dynamic property accessing logic(using Property Chaining in `movie.info[key]`) to get the `key` and current key's `value`
+    //   }
+    // }
+    
+    // Applying `Object Destructuring(i.e { keyName1: newKeyName1 , ...restOperator } = objectName)` similar to `Array Destructuring(i.e [anyName for `index 1 item`, ...restOperator] = arrayName)` on `movie.info`
+    const { info, ...otherProps } = movie; // pulling out `info` key's value from `movie` object and storing it in a `const` naming `info` (here both constant `name` and `keyName` should be same) 
+    // and for remaining keys we can use `...restOperator`
+    console.log(otherProps) // i.e `id` of `movie` object
+    const { title: movieTitle } = info; // taking out `title` and changing it's name to `movieTitle`
+    // let text = info.title + ' - ';
+    let text = movieTitle + ' - ';
+    for (const key in info) {
       if (key !== 'title' ){ // as we know key is always a string so writing `title` as 'string' otherwise javascript will search for `title` variable
-        text = text + `${key}: ${movie.info[key]}`; // Dynamic property accessing logic(using Property Chaining in `movie.info[key]`) to get the `key` and current key's `value`
+        text = text + `${key}: ${info[key]}`; // Dynamic property accessing logic(using Property Chaining in `info[key]`) to get the `key` and current key's `value`
       }
     }
     movieEl.textContent = text;

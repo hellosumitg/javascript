@@ -38,6 +38,12 @@ const renderMovies = (filter = '') => {
     //   }
     // }
     
+    // Checking for Property Existence
+    // if (!('info' in movie)) { // here for 'info' checked using `in` operator
+    // }
+    // if (movie.info === undefined) { // this means that we don't have `info` property
+    // }
+
     // Applying `Object Destructuring(i.e { keyName1: newKeyName1 , ...restOperator } = objectName)` similar to `Array Destructuring(i.e [anyName for `index 1 item`, ...restOperator] = arrayName)` on `movie.info`
     const { info, ...otherProps } = movie; // pulling out `info` key's value from `movie` object and storing it in a `const` naming `info` (here both constant `name` and `keyName` should be same) 
     // and for remaining keys we can use `...restOperator`

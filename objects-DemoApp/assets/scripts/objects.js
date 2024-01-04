@@ -3,8 +3,8 @@ const searchBtn = document.getElementById('search-btn');
 
 const movies = []; // array is an object of reference type
 
-// To view new movie list on the page after rendering
-const renderMovies = () => {
+// To view new movie list on the page after rendering all if nothing is filtered otherwise render only the filtered one
+const renderMovies = (filter = '') => {
   // creates `card` at the end of the page
   const movieList = document.getElementById('movie-list'); // not an ideal way but good for this DemoApp
 
@@ -14,10 +14,13 @@ const renderMovies = () => {
   } else {
     movieList.classList.add('visible');
   }
-  // below way is not an ideal way
-  movieList.innerHTML = ''; // this means whenever we add a movie we clear the entire current `moveList` and re-rendered it from scratch
+  movieList.innerHTML = ''; // not an ideal way but this means whenever we add a movie we clear the entire current `moveList` and re-rendered it from scratch
 
-  movies.forEach((movie) => {
+  const filteredMovies = !filter // falsy value (i.e no filter value)
+  ? movies 
+  : movies.filter(movie => movie.info.title.includes(filter)) // filter(()=>{})
+
+  filteredMovies.forEach((movie) => {
     const movieEl = document.createElement('li');
     // movieEl.textContent = movie.info.title;
     // for Outputting the Dynamic Properties' `key : value` pair on the card along with Older and Current `movieEl`s
@@ -66,5 +69,14 @@ const addMovieHandler = () => {
   renderMovies();
 };
 
+// Adding the Filter Functionality(i.e Search)
+const searchMovieHandler = () => {
+  // reading the user input
+  const filterTerm = document.getElementById('filter-title').value;
+  // calling render movies and forward the `filterTerm` into it so that it will render movies that are only filtered
+  renderMovies(filterTerm);
+};
+
 // Events
 addMovieBtn.addEventListener('click', addMovieHandler);
+searchBtn.addEventListener('click', searchMovieHandler);

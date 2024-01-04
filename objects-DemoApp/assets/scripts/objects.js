@@ -80,3 +80,42 @@ const searchMovieHandler = () => {
 // Events
 addMovieBtn.addEventListener('click', addMovieHandler);
 searchBtn.addEventListener('click', searchMovieHandler);
+
+
+
+
+// ----------------------------------------------------END---------------------------------------------------------
+
+// The Object Spread Operator(...) creates `shallow-copy` only upto to the top level key-value pair and not upto the nested key-value pair. 
+// But if you want to create complete copy then you have to create it manually
+const person = {
+  name: 'Max',
+  hobbies: ['Sports', 'Cooking']
+};
+console.log('person', person);
+
+
+const anotherPerson = person;
+person.age = 30;
+console.log('This is `anotherPerson`, which is reference to the same `person`', anotherPerson);
+console.log('updated `person`', person);
+
+const person2 = { ...person };
+console.log('This is `person2`, result of spread operation on `person`', person2);
+person.age = 31;
+console.log('person2 after updating `person`', person2, ' there is no change as `spread operator{i.e ...someObject}` creates `shallow-copy`');
+console.log('again updated `person`', person);
+console.log('hence referenced to `person` the `anotherPerson also updated', anotherPerson);
+
+
+person.hobbies.push('Coding');
+console.log('once again updated `person`', person)
+console.log('again updated `anotherPerson` which was referenced to `person', anotherPerson);
+console.log("If you see spread operated `person2` it also updated as it was referenced to `person's` `hobbies` array due to `shallow-copying`", person2);
+
+const person3 = { ...person, age: 29, hobbies:[...person.hobbies]}; // overwriting certain parts of the shallow-copies created by spread operation 
+console.log('fully updated `person', person);
+console.log('Complete manual changes in spread operated `person` to create `person3', person3);
+person.hobbies.pop();
+console.log('`person` after popping `person.hobbies` last item', person);
+console.log('No change in `person3` even after popping `person.hobbies` last item', person3);

@@ -30,10 +30,10 @@ const renderMovies = (filter = '') => {
     // for different `movies` where every time, `extraName` could hold a new value. Now, if we only have one global variable where we store this value,
     // then this will always hold the latest value the user entered, not all values. So here if we can output this, we would also only output the latest value,
     // so that is certainly not a solution we can use, instead we can do something different.
-    let text = movie.info.title + ' - ';
+    let text = movie.info.title + ' - '; // this is called `Property Chaining`
     for (const key in movie.info) {
       if (key !== 'title' ){ // as we know key is always a string so writing `title` as 'string' otherwise javascript will search for `title` variable
-        text = text + `${key}: ${movie.info[key]}`; // Dynamic property accessing logic to get the `key` and current key's `value`
+        text = text + `${key}: ${movie.info[key]}`; // Dynamic property accessing logic(using Property Chaining in `movie.info[key]`) to get the `key` and current key's `value`
       }
     }
     movieEl.textContent = text;
@@ -61,7 +61,7 @@ const addMovieHandler = () => {
       title, // javaScript understand this behind the scene as `title : title`(i.e if keyName = valueName in an object's property then we can omit one of them)
       [extraName]: extraValue // Dynamic PropertyName and PropertyValue
     },
-    id: Math.random()
+    id: Math.random().toString() // here we are doing `Method Chaining`
   };
 
   movies.push(newMovie);

@@ -119,3 +119,10 @@ console.log('Complete manual changes in spread operated `person` to create `pers
 person.hobbies.pop();
 console.log('`person` after popping `person.hobbies` last item', person);
 console.log('No change in `person3` even after popping `person.hobbies` last item', person3);
+
+
+// Understanding `Object.assign()` for creating similar shallow-copies like `spread operator`, 
+// supported by many browsers more than `spread operator { ...someObject }` but we'll use `spread operator` as it's shorter
+console.log('person', person);
+const person4 = Object.assign({}, person);
+console.log('after doing `Object.assign({}, person) we get `person4`', person4);

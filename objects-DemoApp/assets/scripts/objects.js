@@ -116,6 +116,16 @@ const addMovieHandler = () => {
       // `this` inside of a function always refers to what called that function.
       return this.info.title.toUpperCase();
     }
+
+    // Why we don't used `this` inside an `=>` function because they don't bind `this` to anything, instead they keep the context that they have outside of the function 
+    // getFormattedTitle: () => {
+    //   console.log(this); // // outputs global `window` object and not the surrounding object
+    //   // in above line `this` would output `window object` but if we `use strict` mode this line would output `undefined`. 
+    //   // So either way it will never refer to our `movie` object.
+    //   // `this` inside of a function always refers to what called that function.
+    //   return this.info.title.toUpperCase();
+    // }
+
   };
 
   movies.push(newMovie);
@@ -124,16 +134,18 @@ const addMovieHandler = () => {
 };
 
 // Adding the Filter Functionality(i.e Search)
-const searchMovieHandler = () => {
-  console.log(this);
+// const searchMovieHandler = function() { // with anonymous `function()`
+//   // The browser binds `this` for us (on event listeners) to the DOM element that triggered the event
+//   console.log(this); // outputs event triggering thing i.e `<button id="search-btn">Search</button>`
+const searchMovieHandler = () => { // with `=>` function
   // reading the user input
+  console.log(this); // outputs global `window` object as `=>` function doesn't bind `this` to anything because it doesn't know anything about `this` 
   const filterTerm = document.getElementById('filter-title').value;
   // calling render movies and forward the `filterTerm` into it so that it will render movies that are only filtered
   renderMovies(filterTerm);
 };
 
 // Events
-
 addMovieBtn.addEventListener('click', addMovieHandler);
 searchBtn.addEventListener('click', searchMovieHandler);
 
@@ -182,3 +194,39 @@ console.log('No change in `person3` even after popping `person.hobbies` last ite
 console.log('person', person);
 const person4 = Object.assign({}, person);
 console.log('after doing `Object.assign({}, person) we get `person4`', person4);
+
+
+// ----------------------------------------------------END-----------------------------------------------------
+
+// Examples where `=>` function can be helpful along with `this`
+const members1 = {
+  teamName: 'Blue Rockets', 
+  people: ['Max', 'Manuel'],
+  getTeamMembers() {
+    this.people.forEach(p => {
+      console.log(p + ' - ' + this.teamName);
+    })
+  }
+}
+
+console.log(members1.getTeamMembers());
+
+// same above example without `=>` function and `this`
+
+const members2 = {
+  teamName: 'Blue Rockets', 
+  people: ['Max', 'Manuel'],
+  getTeamMembers() {
+    this.people.forEach(function(p) {
+      console.log(this);
+      console.log(p + ' - ' + this.teamName);
+    })
+  }
+}
+
+console.log(members2.getTeamMembers());
+
+// https://www.udemy.com/course/javascript-the-complete-guide-2020-beginner-advanced/learn/lecture/16032376#content
+
+// What's the purpose of this inside of an object method (in non-arrow functions)?
+// Ans: Provide you access to whatever called the method.

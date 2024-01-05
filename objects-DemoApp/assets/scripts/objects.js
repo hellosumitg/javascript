@@ -1,3 +1,4 @@
+// "use strict";
 const addMovieBtn = document.getElementById('add-movie-btn');
 const searchBtn = document.getElementById('search-btn');
 
@@ -48,9 +49,14 @@ const renderMovies = (filter = '') => {
     const { info, ...otherProps } = movie; // pulling out `info` key's value from `movie` object and storing it in a `const` naming `info` (here both constant `name` and `keyName` should be same) 
     // and for remaining keys we can use `...restOperator`
     console.log(otherProps) // i.e `id` of `movie` object
-    const { title: movieTitle } = info; // taking out `title` and changing it's name to `movieTitle`
+    // const { title: movieTitle } = info; // taking out `title` and changing it's name to `movieTitle`
     // let text = info.title + ' - ';
-    let text = movieTitle + ' - ';
+    // let text = movieTitle.toUpperCase() + ' - '; // for converting a string to Upper Case
+    let { getFormattedTitle } = movie; // here in the case of destructuring of method doesn't work well as `method` depends on `this` and `this` depends on `movie` object but here we want it to replace that
+    // let text = movie.getFormattedTitle() + ' - '; // this is also right
+    // but if we want to use directly the `destructured-variable`  we should use `bind()` along with the object on which we want to apply
+    getFormattedTitle = getFormattedTitle.bind(movie);
+    let text = getFormattedTitle() + ' - '; 
     for (const key in info) {
       if (key !== 'title' ){ // as we know key is always a string so writing `title` as 'string' otherwise javascript will search for `title` variable
         text = text + `${key}: ${info[key]}`; // Dynamic property accessing logic(using Property Chaining in `info[key]`) to get the `key` and current key's `value`
@@ -81,7 +87,21 @@ const addMovieHandler = () => {
       title, // javaScript understand this behind the scene as `title : title`(i.e if keyName = valueName in an object's property then we can omit one of them)
       [extraName]: extraValue // Dynamic PropertyName and PropertyValue
     },
-    id: Math.random().toString() // here we are doing `Method Chaining`
+    id: Math.random().toString(), // here we are doing `Method Chaining`
+    
+    // creating a method for converting lowercase strings to Uppercase
+    // below is the longer way of writing
+    // getFormattedTitle: function(){ // !Important: Don't use an `Arrow function` in an object
+    //   return this.info.title.toUpperCase(); // this resembles here the exact object `newMovie`
+    // }
+
+    // The method shorthand syntax where we can remove `:`, `function` and also `=>`
+    getFormattedTitle() {
+      console.log(this); 
+      // in above line `this` would output `window object` but if we `use strict` mode this line would output `undefined`. 
+      // So either way it will never refer to our `movie` object
+      return this.info.title.toUpperCase();
+    }
   };
 
   movies.push(newMovie);

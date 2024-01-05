@@ -55,8 +55,21 @@ const renderMovies = (filter = '') => {
     let { getFormattedTitle } = movie; // here in the case of destructuring of method doesn't work well as `method` depends on `this` and `this` depends on `movie` object but here we want it to replace that
     // let text = movie.getFormattedTitle() + ' - '; // this is also right
     // but if we want to use directly the `destructured-variable`  we should use `bind()` along with the object on which we want to apply
-    getFormattedTitle = getFormattedTitle.bind(movie);
-    let text = getFormattedTitle() + ' - '; 
+    
+    // .bind() - Prepares a function for `future execution` and returns a new `function` object in the end which we then store below in `getFormattedTitle`
+    // Also here we can add arguments just by using `,` separated.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+    // getFormattedTitle = getFormattedTitle.bind(movie, );
+    // let text = getFormattedTitle() + ' - '; 
+    
+    // .call() - Just go ahead and executes the function right away. So it allowing us to overwrite what `this` inside of the function refers to,
+    // Also here we can add arguments just by using `,` separated.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
+    // let text = getFormattedTitle.call(movie, ) + ' - '; 
+
+    //.apply() - similar to .call() but here we can add arguments in the form of array `[]`
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
+    let text = getFormattedTitle.apply(movie, []) + ' - '; 
     for (const key in info) {
       if (key !== 'title' ){ // as we know key is always a string so writing `title` as 'string' otherwise javascript will search for `title` variable
         text = text + `${key}: ${info[key]}`; // Dynamic property accessing logic(using Property Chaining in `info[key]`) to get the `key` and current key's `value`
@@ -99,7 +112,8 @@ const addMovieHandler = () => {
     getFormattedTitle() {
       console.log(this); 
       // in above line `this` would output `window object` but if we `use strict` mode this line would output `undefined`. 
-      // So either way it will never refer to our `movie` object
+      // So either way it will never refer to our `movie` object.
+      // `this` inside of a function always refers to what called that function.
       return this.info.title.toUpperCase();
     }
   };
@@ -111,6 +125,7 @@ const addMovieHandler = () => {
 
 // Adding the Filter Functionality(i.e Search)
 const searchMovieHandler = () => {
+  console.log(this);
   // reading the user input
   const filterTerm = document.getElementById('filter-title').value;
   // calling render movies and forward the `filterTerm` into it so that it will render movies that are only filtered
@@ -118,6 +133,7 @@ const searchMovieHandler = () => {
 };
 
 // Events
+
 addMovieBtn.addEventListener('click', addMovieHandler);
 searchBtn.addEventListener('click', searchMovieHandler);
 

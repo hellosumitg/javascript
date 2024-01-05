@@ -71,7 +71,7 @@ const renderMovies = (filter = '') => {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
     let text = getFormattedTitle.apply(movie, []) + ' - '; 
     for (const key in info) {
-      if (key !== 'title' ){ // as we know key is always a string so writing `title` as 'string' otherwise javascript will search for `title` variable
+      if (key !== 'title' && key !== '_title' ){ // as we know key is always a string so writing `title` as 'string' otherwise javascript will search for `title` variable
         text = text + `${key}: ${info[key]}`; // Dynamic property accessing logic(using Property Chaining in `info[key]`) to get the `key` and current key's `value`
       }
     }
@@ -87,7 +87,7 @@ const addMovieHandler = () => {
 
   // Adding some validations
   if (
-    title.trim() === '' ||
+    // title.trim() === '' || // commenting as we are going to implement Getters & Setters for extra validation
     extraName.trim() === '' ||
     extraValue.trim() === ''
   ) {
@@ -97,7 +97,19 @@ const addMovieHandler = () => {
   // After Validation constructing an object `newMovie`
   const newMovie = {
     info: {
-      title, // javaScript understand this behind the scene as `title : title`(i.e if keyName = valueName in an object's property then we can omit one of them)
+      // title, // javaScript understand this behind the scene as `title : title`(i.e if keyName = valueName in an object's property then we can omit one of them)
+      // Getters and Setters for extra validation
+      set title(value){
+        if (value.trim() === '') {
+          this._title = 'DEFAULT';
+          return; 
+          // Or we can also `throw an error` if we want to stop code execution/trigger try-catch!
+        }
+        this._title = value;
+      },
+      get title() {
+        return this._title;
+      },
       [extraName]: extraValue // Dynamic PropertyName and PropertyValue
     },
     id: Math.random().toString(), // here we are doing `Method Chaining`
@@ -125,8 +137,10 @@ const addMovieHandler = () => {
     //   // `this` inside of a function always refers to what called that function.
     //   return this.info.title.toUpperCase();
     // }
-
   };
+
+  newMovie.info.title = title; // which is `document.getElementById('title').value;`
+  console.log(newMovie.info.title);
 
   movies.push(newMovie);
   console.log(newMovie);

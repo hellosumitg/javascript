@@ -1,13 +1,17 @@
 class Product {
-  title = 'DEFAULT';
-  imageUrl;
-  description;
-  price;
+  // below all are (Public) Class Fields
+  // title = 'DEFAULT';
+  // imageUrl;
+  // description;
+  // price;
 
-  // someMethodName1() {}
+  // below are (Public) Class Methods
+  // someMethodName1() {} 
   // someMethodName2() {}
 
   constructor(title, image, desc, price) {
+    // below all are (Public) Class Properties
+    // As below we have initialized fields in the constructor so we directly use it here
     this.title = title;
     this.imageUrl = image;
     this.description = desc;

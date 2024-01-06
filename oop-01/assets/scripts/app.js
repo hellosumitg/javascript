@@ -3,6 +3,9 @@ class Product {
   imageUrl;
   description;
   price;
+
+  someMethodName1() {}
+  someMethodName2() {}
 }
 
 console.log(new Product());

@@ -20,7 +20,7 @@ class Product {
   }
 }
 
-console.log(new Product());
+// console.log(new Product());
 
 // below class is for rendering a single product item
 class ProductItem {
@@ -28,6 +28,13 @@ class ProductItem {
     this.product = product; // adds a new "product" property to the eventually created objects
   }
 
+  addToCart() {
+    console.log('Adding product to cart...');
+    // due to weird behavior of `this` below, as here Javascript then binds `this` to the source of that event or to the button
+    // and not to our class or the object where this effectively runs on later
+    console.log(this.product); // outputs `undefined` if not used with `.bind()`
+  }
+  
   render() {
     const prodEl = document.createElement('li'); // creating a new list element so that we can append it to the DOM
     prodEl.className = 'product-item';
@@ -42,6 +49,9 @@ class ProductItem {
             </div>
         </div>
       `;
+    const addCartButton = prodEl.querySelector('button');
+    // addCartButton.addEventListener('click', this.addToCart);
+    addCartButton.addEventListener('click', this.addToCart.bind(this));
     return prodEl;
   }
 }

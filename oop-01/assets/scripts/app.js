@@ -31,7 +31,7 @@ class ShoppingCart {
   // without instantiating(i.e by using `new` keyword).
   addProduct(product) {
     this.items.push(product);
-    this.totalOutput = `<h2>Total: \$${1}</h2>`;
+    this.totalOutput.innerHTML = `<h2>Total: \$${1}</h2>`;
   }
 
   render() {
@@ -41,6 +41,7 @@ class ShoppingCart {
       <button>Order Now!</button>
     `;
     cartEl.className = 'cart';
+    this.totalOutput = cartEl.querySelector('h2');
     return cartEl; // here in the render method so that wherever we create that `ShoppingCart`, we can append it to the DOM.
   }
 }
@@ -56,6 +57,7 @@ class ProductItem {
     // due to weird behavior of `this` below, as here Javascript then binds `this` to the source of that event or to the button
     // and not to our class or the object where this effectively runs on later
     console.log(this.product); // outputs `undefined` if not used with `.bind()`
+    App.addProductToCart(this.product); //  `class App's` static method
   }
 
   render() {
@@ -81,13 +83,15 @@ class ProductItem {
 
 class ProductList {
   products = [
-    new Product(
+    new Product( // instantiating `class Product {}` using `new` keyword
+      // below are `Product's` instance `property`
       'A Pillow',
       'https://i.imgur.com/LM84BLy.jpg',
       'A soft pillow!',
       19.99
     ),
-    new Product(
+    new Product( // instantiating `class Product {}` using `new` keyword
+      // below are `Product's` instance `property`
       'A Carpet',
       'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg',
       'A carpet which you might like - or not.',
@@ -107,8 +111,8 @@ class ProductList {
     prodList.className = 'product-list';
     for (const prod of this.products) {
       // logic for rendering single product
-      const productItem = new ProductItem(prod);
-      const prodEl = productItem.render();
+      const productItem = new ProductItem(prod); // instantiating `class ProductItem {}` using `new` keyword
+      const prodEl = productItem.render(); // `ProductItem's` instance `method()`
       prodList.append(prodEl);
     }
     return prodList; // here in the render method so that, we can append it to the DOM.
@@ -120,15 +124,30 @@ class Shop {
   render() {
     const renderHook = document.getElementById('app');
 
-    const cart = new ShoppingCart(); // instantiating `class ShoppingCart {}`
-    const cartEl = cart.render();
-    const productList = new ProductList();
-    const prodListEl = productList.render();
+    this.cart = new ShoppingCart(); // instantiating `class ShoppingCart {}` using `new` keyword
+    const cartEl = this.cart.render(); // `ShoppingCart's` instance `method()`
+    const productList = new ProductList(); // instantiating `class ProductList {}` using `new` keyword
+    const prodListEl = productList.render(); // `ProductList's` instance `method()`
 
     renderHook.append(cartEl);
     renderHook.append(prodListEl);
   }
 }
 
-const shop = new Shop();
-shop.render();
+// below class holds our overall App
+class App {
+  static cart; // used in below static methods
+
+  static init() {
+    // Only accessible on `class` itself without instantiation (i.e not on instance which means not uses `new` keyword)
+    const shop = new Shop(); // instantiating `class Shop {}` using `new` keyword
+    shop.render(); // below are `Shop's` instance `property`
+    this.cart = shop.cart;
+  }
+
+  static addProductToCart(product) { // static method
+    this.cart.addProduct(product); // `ShoppingCart's` method
+  }
+}
+ 
+App.init(); // here `class App's` static `method()` can be called directly without using `new` keyword 

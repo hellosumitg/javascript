@@ -1,4 +1,9 @@
 // keep the first letter of a class name always Capital
+// classes: a) are great where we re-create the same type of objects over and over again;
+//          b) has more overhead initially but easy "object duplication" thereafter
+// objects: a) are great for general data grouping, objects which you only create once
+//          b) quick & easy to create, no overhead
+
 class Product {
   // below all are (Public) Class Fields
   // title = 'DEFAULT';
@@ -141,6 +146,7 @@ class App {
   static init() {
     // Only accessible on `class` itself without instantiation (i.e not on instance which means not uses `new` keyword)
     const shop = new Shop(); // instantiating `class Shop {}` using `new` keyword
+    // const { cart } = shop; // object destructuring can also be used in classes
     shop.render(); // below are `Shop's` instance `property`
     this.cart = shop.cart;
   }

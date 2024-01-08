@@ -22,6 +22,29 @@ class Product {
 
 // console.log(new Product());
 
+class ShoppingCart {
+  items = [];
+
+  // So below `addProduct()` method that probably should update what we see on the screen,
+  // but the problem is how can we call that `addProduct()` method from inside of the `ProductItem` class ?
+  // Hence, Communication Can Be Challenging! as we cannot directly call any `method()` from a `class ClassName {}`
+  // without instantiating(i.e by using `new` keyword).
+  addProduct(product) {
+    this.items.push(product);
+    this.totalOutput = `<h2>Total: \$${1}</h2>`;
+  }
+
+  render() {
+    const cartEl = document.createElement('section');
+    cartEl.innerHTML = `
+      <h2>Total: \$${0}</h2>
+      <button>Order Now!</button>
+    `;
+    cartEl.className = 'cart';
+    return cartEl; // here in the render method so that wherever we create that `ShoppingCart`, we can append it to the DOM.
+  }
+}
+
 // below class is for rendering a single product item
 class ProductItem {
   constructor(product) {
@@ -34,7 +57,7 @@ class ProductItem {
     // and not to our class or the object where this effectively runs on later
     console.log(this.product); // outputs `undefined` if not used with `.bind()`
   }
-  
+
   render() {
     const prodEl = document.createElement('li'); // creating a new list element so that we can append it to the DOM
     prodEl.className = 'product-item';
@@ -52,7 +75,7 @@ class ProductItem {
     const addCartButton = prodEl.querySelector('button');
     // addCartButton.addEventListener('click', this.addToCart);
     addCartButton.addEventListener('click', this.addToCart.bind(this));
-    return prodEl;
+    return prodEl; // here in the render method so that, we can append it to the DOM.
   }
 }
 
@@ -80,35 +103,32 @@ class ProductList {
   // Keep in mind: The "products" field is "magically" added as a property during the construction process anyways!
 
   render() {
-    const renderHook = document.getElementById('app');
     const prodList = document.createElement('ul');
     prodList.className = 'product-list';
     for (const prod of this.products) {
-      // // logic for rendering single product 
-
-      // // earlier way
-      // const prodEl = document.createElement('li'); // creating a new list element so that we can append it to the DOM
-      // prodEl.className = 'product-item';
-      // prodEl.innerHTML = `
-      //   <div>
-      //       <img src="${prod.imageUrl}" alt="${prod.title}" >
-      //       <div class="product-item__content">
-      //         <h2>${prod.title}</h2>
-      //         <h3>\$${prod.price}</h3>
-      //         <p>${prod.description}</p>
-      //         <button>Add to Cart</button>
-      //       </div>
-      //   </div>
-      // `;
-
-      // new way
+      // logic for rendering single product
       const productItem = new ProductItem(prod);
       const prodEl = productItem.render();
       prodList.append(prodEl);
     }
-    renderHook.append(prodList);
+    return prodList; // here in the render method so that, we can append it to the DOM.
   }
 }
 
-const productList = new ProductList();
-productList.render();
+// Front page or App that combines all
+class Shop {
+  render() {
+    const renderHook = document.getElementById('app');
+
+    const cart = new ShoppingCart(); // instantiating `class ShoppingCart {}`
+    const cartEl = cart.render();
+    const productList = new ProductList();
+    const prodListEl = productList.render();
+
+    renderHook.append(cartEl);
+    renderHook.append(prodListEl);
+  }
+}
+
+const shop = new Shop();
+shop.render();

@@ -30,13 +30,30 @@ class Product {
 class ShoppingCart {
   items = [];
 
+  set cartItems(value) {
+    this.items = value;
+    this.totalOutput.innerHTML = `<h2>Total: \$${this.totalAmount.toFixed(2)}</h2>`; // `toFixed(2)` means upto 2 decimal places
+  }
+
+  get totalAmount() {
+    // const sum = this.items.reduce((prevValue, curItem) => {
+    //   return prevValue + curItem.price;
+    // }, 0);
+    const sum = this.items.reduce(
+      (prevValue, curItem) => prevValue + curItem.price,
+      0
+    );
+    return sum;
+  }
   // So below `addProduct()` method that probably should update what we see on the screen,
   // but the problem is how can we call that `addProduct()` method from inside of the `ProductItem` class ?
   // Hence, Communication Can Be Challenging! as we cannot directly call any `method()` from a `class ClassName {}`
   // without instantiating(i.e by using `new` keyword).
   addProduct(product) {
-    this.items.push(product);
-    this.totalOutput.innerHTML = `<h2>Total: \$${1}</h2>`;
+    // this.items.push(product);
+    const updatedItems = [...this.items]; // copying using spread operator
+    updatedItems.push(product);
+    this.cartItems = updatedItems; // triggers the setter i.e `set cartItems(value){}`
   }
 
   render() {
@@ -151,9 +168,10 @@ class App {
     this.cart = shop.cart;
   }
 
-  static addProductToCart(product) { // static method
+  static addProductToCart(product) {
+    // static method
     this.cart.addProduct(product); // `ShoppingCart's` method
   }
 }
- 
-App.init(); // here `class App's` static `method()` can be called directly without using `new` keyword 
+
+App.init(); // here `class App's` static `method()` can be called directly without using `new` keyword

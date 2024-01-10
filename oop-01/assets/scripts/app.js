@@ -27,7 +27,35 @@ class Product {
 
 // console.log(new Product());
 
-class ShoppingCart {
+class ElementAttribute {
+  constructor(attrName, attrValue) {
+    this.name = attrName;
+    this.value = attrValue;
+  }
+}
+
+class Component {
+  constructor(renderHookId) {
+    console.log('called');
+    this.hookId = renderHookId
+  }
+
+  createRootElement(tag, cssClasses, attributes) {
+    const rootElement = document.createElement(tag);
+    if (cssClasses) {
+      rootElement.className = cssClasses;
+    }
+    if (attributes && attributes.length > 0) {
+      for (const attr of attributes) {
+        rootElement.setAttribute(attr.name, attr.value);
+      }
+    }
+    document.getElementById(this.hookId).append(rootElement);
+    return rootElement;
+  }
+}
+
+class ShoppingCart extends Component { // `extends` used for inheriting the `Component` class properties and methods
   items = [];
 
   set cartItems(value) {
@@ -45,6 +73,14 @@ class ShoppingCart {
     );
     return sum;
   }
+
+  constructor(renderHookId) {
+    super(renderHookId); // calls the constructor in the parent class
+    // Important! note about `super()` - when you add `super()` to your `constructor`, 
+    // make sure you're not relying on any `field/property` in that `super's constructor()` method,
+    // but after `super()` we can add any `property` or `method()` we like
+  }
+
   // So below `addProduct()` method that probably should update what we see on the screen,
   // but the problem is how can we call that `addProduct()` method from inside of the `ProductItem` class ?
   // Hence, Communication Can Be Challenging! as we cannot directly call any `method()` from a `class ClassName {}`
@@ -57,20 +93,23 @@ class ShoppingCart {
   }
 
   render() {
-    const cartEl = document.createElement('section');
+    // const cartEl = document.createElement('section'); // used when we are not using `extends` (i.e inheritance)
+    const cartEl = this.createRootElement('section', 'cart');
     cartEl.innerHTML = `
       <h2>Total: \$${0}</h2>
       <button>Order Now!</button>
     `;
-    cartEl.className = 'cart';
+    // cartEl.className = 'cart'; // used when we are not using `extends` (i.e inheritance)
     this.totalOutput = cartEl.querySelector('h2');
-    return cartEl; // here in the render method so that wherever we create that `ShoppingCart`, we can append it to the DOM.
+    // below `return cartEl` was used earlier before the use of `extends` i.e `inheritance`
+    // return cartEl; // here in the render method so that wherever we create that `ShoppingCart`, we can append it to the DOM.
   }
 }
 
 // below class is for rendering a single product item
-class ProductItem {
-  constructor(product) {
+class ProductItem extends Component {
+  constructor(product, renderHookId) {
+    super(renderHookId); // Always call `super()` above `this` so that base `class` is fully initialized
     this.product = product; // adds a new "product" property to the eventually created objects
   }
 
@@ -83,8 +122,10 @@ class ProductItem {
   }
 
   render() {
-    const prodEl = document.createElement('li'); // creating a new list element so that we can append it to the DOM
-    prodEl.className = 'product-item';
+    // const prodEl = document.createElement('li'); // creating a new list element so that we can append it to the DOM
+    // prodEl.className = 'product-item';
+    // above two lines were used when we are not using `extends` (i.e inheritance)
+    const prodEl = this.createRootElement('li', 'product-item');
     prodEl.innerHTML = `
         <div>
             <img src="${this.product.imageUrl}" alt="${this.product.title}" >
@@ -99,11 +140,11 @@ class ProductItem {
     const addCartButton = prodEl.querySelector('button');
     // addCartButton.addEventListener('click', this.addToCart);
     addCartButton.addEventListener('click', this.addToCart.bind(this));
-    return prodEl; // here in the render method so that, we can append it to the DOM.
+    // return prodEl; // here in the render method so that, we can append it to the DOM; This was used when we are not using `extends` (i.e inheritance)
   }
 }
 
-class ProductList {
+class ProductList extends Component {
   products = [
     new Product( // instantiating `class Product {}` using `new` keyword
       // below are `Product's` instance `property`
@@ -125,34 +166,44 @@ class ProductList {
   // a product's property will be added automatically and the default value will be that array.
 
   // As all properties of Products are initialized above hence we can keep below `constructor` empty
-  constructor() {}
+  constructor(renderHookId) {
+    super(renderHookId);
+  }
   // Keep in mind: The "products" field is "magically" added as a property during the construction process anyways!
 
   render() {
-    const prodList = document.createElement('ul');
-    prodList.className = 'product-list';
+    // const prodList = document.createElement('ul');
+    // prodList.id = 'prod-list';
+    // prodList.className = 'product-list';
+    // Above 3 lines were used when we are not using `extends` (i.e inheritance)
+    const prodList = this.createRootElement('ul', 'product-list', [
+      new ElementAttribute('id', 'prod-list'),
+    ]);
     for (const prod of this.products) {
       // logic for rendering single product
-      const productItem = new ProductItem(prod); // instantiating `class ProductItem {}` using `new` keyword
-      const prodEl = productItem.render(); // `ProductItem's` instance `method()`
-      prodList.append(prodEl);
+      // const productItem = new ProductItem(prod); // instantiating `class ProductItem {}` using `new` keyword; This was used when we are not using `extends` (i.e inheritance)
+      const productItem = new ProductItem(prod, 'prod-list');
+      // const prodEl = productItem.render(); // `ProductItem's` instance `method()`; This was used when we are not using `extends` (i.e inheritance)
+      productItem.render();
+      // prodList.append(prodEl); used when we are not using `extends` (i.e inheritance)
     }
-    return prodList; // here in the render method so that, we can append it to the DOM.
+    // return prodList; // here in the render method so that, we can append it to the DOM; This was used when we are not using `extends` (i.e inheritance)
   }
 }
 
 // Front page or App that combines all
 class Shop {
   render() {
-    const renderHook = document.getElementById('app');
-
-    this.cart = new ShoppingCart(); // instantiating `class ShoppingCart {}` using `new` keyword
-    const cartEl = this.cart.render(); // `ShoppingCart's` instance `method()`
-    const productList = new ProductList(); // instantiating `class ProductList {}` using `new` keyword
-    const prodListEl = productList.render(); // `ProductList's` instance `method()`
-
-    renderHook.append(cartEl);
-    renderHook.append(prodListEl);
+    // const renderHook = document.getElementById('app'); This was used when we are not using `extends` (i.e inheritance)
+    // this.cart = new ShoppingCart(); // instantiating `class ShoppingCart {}` using `new` keyword; used earlier before the use of `extends` i.e `inheritance`
+    this.cart = new ShoppingCart('app');
+    // const cartEl = this.cart.render(); // `ShoppingCart's` instance `method()`; used earlier before the use of `extends` i.e `inheritance`
+    this.cart.render();
+    const productList = new ProductList('app'); // instantiating `class ProductList {}` using `new` keyword
+    // const prodListEl = productList.render(); // `ProductList's` instance `method()`; This was used when we are not using `extends` (i.e inheritance)
+    productList.render();
+    // renderHook.append(cartEl); // used earlier before the use of `extends` i.e `inheritance`
+    // renderHook.append(prodListEl); // This was used when we are not using `extends` (i.e inheritance)
   }
 }
 

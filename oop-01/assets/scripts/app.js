@@ -7,6 +7,10 @@
 // Always Remember! that `this` refers to what called the `method()` and for the `constructor()`, that basically is always the `object` you are creating.
 // `new` keyword does make sure that a new object is created and that `this` inside of the constructor is set to that `object`.
 
+// Public Fields, Properties & Methods:- Accessible `OUTSIDE` of the class/object
+// whereas
+// Private Fields, Properties & Methods:- Accessible `ONLY INSIDE` of the class/object
+
 class Product {
   // below all are (Public) Class Fields
   // title = 'DEFAULT';
@@ -167,7 +171,7 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-  products = [];
+  #products = []; // `#` makes this variable `Private Field` i.e used only within this class
 
   // what will happen here is that when we create an object based on this `ProductList` class,
   // a product's property will be added automatically and the default value will be that array.
@@ -175,12 +179,13 @@ class ProductList extends Component {
   // As all properties of Products are initialized above hence we can keep below `constructor` empty
   constructor(renderHookId) {
     super(renderHookId);
+    this.render();
     this.fetchProducts();
   }
 
   // In other applications we will be fetching these data from database
   fetchProducts() {
-    this.products = [
+    this.#products = [
       new Product( // instantiating `class Product {}` using `new` keyword
         // below are `Product's` instance `property`
         'A Pillow',
@@ -201,7 +206,7 @@ class ProductList extends Component {
   // Keep in mind: The "products" field is "magically" added as a property during the construction process anyways!
 
   renderProducts() {
-    for (const prod of this.products) {
+    for (const prod of this.#products) {
       // logic for rendering single product
       // const productItem = new ProductItem(prod); // instantiating `class ProductItem {}` using `new` keyword; This was used when we are not using `extends` (i.e inheritance)
       new ProductItem(prod, 'prod-list');
